@@ -34,6 +34,8 @@ namespace FriendsApp.API
 
             //Cors origin @Pedro
             services.AddCors();
+            //Add for dependency injection
+            services.AddScoped<IAuthRepository, AuthRepository>();
 
         }
 
