@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FriendsApp.API.Data;
+using FriendsApp.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +69,23 @@ namespace FriendsApp.API
             }
             else
             {
+                //Code to handle exception globally. No need to put try/catch everywhere in the code
+                //Need to change application from Development to Production in launchSettings.json
+                app.UseExceptionHandler(
+                    builder => {
+                        builder.Run(async context => {
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                            var error = context.Features.Get<IExceptionHandlerFeature>();
+
+                            if(error != null)
+                            {
+                                context.Response.AddApplicationError(error.Error.Message);
+                                await context.Response.WriteAsync(error.Error.Message);
+                            }
+                        });
+                    }
+                );
                 //app.UseHsts(); commented because we are not concerned with security for now.
             }
 

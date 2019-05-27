@@ -50,6 +50,7 @@ namespace FriendsApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
+
             /* Send part of this code to another file, it cant be in the controller */
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
@@ -84,6 +85,10 @@ namespace FriendsApp.API.Controllers
             return Ok(new {
                 token = tokenHandler.WriteToken(token)
             });
+
+            
+            
+            
 
         }
     }
