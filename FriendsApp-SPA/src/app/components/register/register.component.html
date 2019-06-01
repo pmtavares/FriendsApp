@@ -13,7 +13,7 @@
       <input type="text" class="form-control" #username="ngModel" name="username" required [(ngModel)]="model.username" placeholder="Username">
     </div>
     <div *ngIf="username.invalid && username.touched" class="alert alert-danger">
-        <div *ngIf="!!username.errors.required" class="text-danger">Username is required</div>
+        <div *ngIf="!!username.errors.required" class="text-light">Username is required</div>
     </div>
 
     <div class="form-group">
@@ -21,8 +21,8 @@
       required [(ngModel)]="model.password" placeholder="Password">
     </div>
     <div *ngIf="password.invalid && password.touched" class="alert alert-danger">
-        <div *ngIf="!!password.errors.required" class="text-danger">password is required</div>
-        <div *ngIf="!!password.errors.minlength"class="text-danger">Should be minimum of 4</div>
+        <div *ngIf="!!password.errors.required" class="text-light">password is required</div>
+        <div *ngIf="!!password.errors.minlength"class="text-light">Should be minimum of 4</div>
     </div>
   
     <div class="form-group text-center">
@@ -31,3 +31,5 @@
     </div>
     
   </form>
+
+  
