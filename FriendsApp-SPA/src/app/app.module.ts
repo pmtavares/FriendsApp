@@ -13,6 +13,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { ErrorInterceptorProvider } from './services/error.intercept';
 import { AlertifyService } from './services/alertify.service';
 import { JqueryBootStrapService } from './services/jquerybootstrap.service';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { ListsComponent } from './components/lists/lists.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 @NgModule({
@@ -20,7 +24,10 @@ import { JqueryBootStrapService } from './services/jquerybootstrap.service';
     AppComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    MemberListComponent,
+    ListsComponent,
+    MessagesComponent
 
   ],
   imports: [
@@ -34,6 +41,7 @@ import { JqueryBootStrapService } from './services/jquerybootstrap.service';
     AuthService,
     ErrorInterceptorProvider,
     AlertifyService,
+    AuthGuard,
     JqueryBootStrapService
   ],
   bootstrap: [AppComponent]

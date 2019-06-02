@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { JqueryBootStrapService } from 'src/app/services/jquerybootstrap.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -12,7 +12,9 @@ export class NavComponent implements OnInit {
 
   model: any = {};
   userLogged: string;
-  constructor(private authService: AuthService, private alertify: AlertifyService, private jq: JqueryBootStrapService) { }
+  constructor(private authService: AuthService, 
+    private alertify: AlertifyService, 
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,6 +32,8 @@ export class NavComponent implements OnInit {
         console.log("Login failed")
         console.log(error);
         this.alertify.error(error);
+      }, ()=>{
+        this.router.navigate(['/members']);
       })
 
     
@@ -37,7 +41,7 @@ export class NavComponent implements OnInit {
 
   loggedIn()
   {
-    const token = localStorage.getItem('token');    
+    //const token = localStorage.getItem('token');    
     this.userLogged = this.authService.loggedIn();
     if(this.userLogged != "")
     {
@@ -52,16 +56,9 @@ export class NavComponent implements OnInit {
     this.userLogged = "";
     console.log('User has logged out');
     this.alertify.message("User logged out");
+    this.router.navigate(['/home']);
   }
 
-  toast()
-  {    
-    this.jq.toast();
-  }
 
-  alert()
-  {
-    this.jq.alert();
-  }
 
 }
