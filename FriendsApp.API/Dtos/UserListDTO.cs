@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
+using FriendsApp.API.Models;
 
-namespace FriendsApp.API.Models
+namespace FriendsApp.API.Dtos
 {
-    public class User
+    public class UserListDTO
     {
         public int Id {get; set;}
         public string Username { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
-
         public string Gender { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public int Age { get; set; }
 
         public string NickName { get; set; }
 
@@ -32,6 +29,6 @@ namespace FriendsApp.API.Models
 
         public string Country { get; set; }
 
-        public ICollection<Photo> Photos { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }
