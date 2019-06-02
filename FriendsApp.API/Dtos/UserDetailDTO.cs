@@ -31,6 +31,6 @@ namespace FriendsApp.API.Dtos
 
         public string PhotoUrl { get; set; }
 
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<PhotosDetailDTO> Photos { get; set; }
     }
 }

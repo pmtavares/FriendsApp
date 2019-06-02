@@ -19,6 +19,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using FriendsApp.API.Repository;
+using AutoMapper;
 
 namespace FriendsApp.API
 {
@@ -37,12 +39,22 @@ namespace FriendsApp.API
             //Install Microsoft.EntityFrameworkCore.Sqlite @Pedro
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); //Configuration is appsettings.json
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                    //The following commands was because postman was throwing looping erros (photo/user)
+                    .AddJsonOptions(opt => {
+                        opt.SerializerSettings.ReferenceLoopHandling = 
+                            Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
 
             //Cors origin @Pedro
             services.AddCors();
             //Add for dependency injection
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IFriendsRepository, FriendsRepository>();
+            services.AddAutoMapper();
+
+            //Populate database
+            services.AddTransient<Seed>();
 
             //Add Authentication as a service @Pedro
             //After, we have to tell the application about this service. It is done on Configure method below
@@ -61,7 +73,7 @@ namespace FriendsApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -88,7 +100,7 @@ namespace FriendsApp.API
                 );
                 //app.UseHsts(); commented because we are not concerned with security for now.
             }
-
+            //seeder.SeedUsers(); // Call when execute the app in order to seed database
             //app.UseHttpsRedirection(); commented because we are not concerned with security for now.
             app.UseCors(x=> x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); //Allow use cors @Pedro
             app.UseAuthentication(); //This is added after AddAuthentication above: Middleware
