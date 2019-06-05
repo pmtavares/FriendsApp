@@ -1,0 +1,28 @@
+.img-thumbnail
+{
+    margin: 20px;
+    width: 80%;
+    height: 180px;
+}
+
+.card-body
+{
+    padding: 0 25px;
+}
+
+.card-footer{
+    padding: 10px 15px;
+    background-color: #fff;
+    border-top: none;
+}
+
+
+/* TABS Effects */
+.nav-tabs .nav-link.active {
+    font-weight:bold;
+    background-color: transparent;
+    border-bottom:3px solid #008cba;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+  }
