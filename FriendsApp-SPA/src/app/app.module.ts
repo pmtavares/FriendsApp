@@ -24,6 +24,8 @@ import { UserService } from './services/user.service';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
+import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolver/member-edit.resolver';
 
 
 
@@ -42,7 +44,8 @@ export function tokenGetter()
     ListsComponent,
     MessagesComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberEditComponent
 
 
   ],
@@ -69,7 +72,8 @@ export function tokenGetter()
     AuthGuard,
     JqueryBootStrapService,
     UserService,
-    MemberDetailResolver
+    MemberDetailResolver,
+    MemberEditResolver
     
   ],
   bootstrap: [AppComponent]

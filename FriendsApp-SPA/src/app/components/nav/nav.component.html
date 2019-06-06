@@ -21,7 +21,7 @@
                     Welcome {{userLogged | titlecase}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right mt-2" *dropdownMenu >
-                  <a class="dropdown-item  cursor-pointer" ><i class="fa fa-edit"></i>Edit Profile</a>
+                  <a class="dropdown-item  cursor-pointer" [routerLink]="['/member/edit']"><i class="fa fa-edit"></i>Edit Profile</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item  cursor-pointer" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a>
                 </div>
