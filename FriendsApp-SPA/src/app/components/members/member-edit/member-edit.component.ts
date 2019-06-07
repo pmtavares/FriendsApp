@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { User } from 'src/app/_models/User';
 import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { NgForm } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -11,9 +13,19 @@ import { NgForm } from '@angular/forms';
 })
 export class MemberEditComponent implements OnInit {
   user: User;
-  @ViewChild('editForm') editForm: NgForm; //To manipulate the form
+  @ViewChild('editForm') editForm: NgForm; //To manipulate the form (reset etc)
 
-  constructor(private route: ActivatedRoute, private alertify: AlertifyService) { }
+  //Method below is to prevent closing the browser when editing the form
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any){
+    if(this.editForm.dirty)
+    {
+      $event.returnValue = true;
+    }
+  }
+
+  constructor(private route: ActivatedRoute, private alertify: AlertifyService, 
+              private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -24,9 +36,13 @@ export class MemberEditComponent implements OnInit {
 
   updateUser()
   {
-    console.log(this.user);
-    this.alertify.message("Saved");
-    this.editForm.reset(this.user); //Turn the form to the initial state
+    this.userService.updateUser(this.authService.decodedToken.nameid, this.user)
+      .subscribe(next=> {
+        this.alertify.message("Updated Success");
+        this.editForm.reset(this.user); //Turn the form to the initial state
+      }, error=>{
+        this.alertify.error(error);
+      });
   }
 
 }

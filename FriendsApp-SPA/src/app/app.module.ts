@@ -26,6 +26,7 @@ import { MemberDetailComponent } from './components/members/member-detail/member
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
 import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolver/member-edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 
 
@@ -73,7 +74,8 @@ export function tokenGetter()
     JqueryBootStrapService,
     UserService,
     MemberDetailResolver,
-    MemberEditResolver
+    MemberEditResolver,
+    PreventUnsavedChanges
     
   ],
   bootstrap: [AppComponent]
