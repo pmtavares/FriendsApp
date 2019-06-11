@@ -30,3 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### ngx-bootstrap
 ### ngx-gallery 5.6.0
 ### fonts-awesome
+### ng2-file upload

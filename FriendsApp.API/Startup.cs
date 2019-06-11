@@ -52,10 +52,8 @@ namespace FriendsApp.API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IFriendsRepository, FriendsRepository>();
             services.AddAutoMapper();
-
             //Populate database
             services.AddTransient<Seed>();
-
             //Add Authentication as a service @Pedro
             //After, we have to tell the application about this service. It is done on Configure method below
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -69,6 +67,9 @@ namespace FriendsApp.API
                         ValidateAudience = false
                     };
                 });
+
+            //Cloudinary images storage: @pedro
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
         }
 

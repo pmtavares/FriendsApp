@@ -1,8 +1,8 @@
 using System;
 
-namespace FriendsApp.API.Models
+namespace FriendsApp.API.Dtos
 {
-    public class Photo
+    public class PhotoReturnDTO
     {
         public int Id { get; set; }
 
@@ -15,9 +15,5 @@ namespace FriendsApp.API.Models
         public bool IsMain {get; set;}
 
         public string PublicId {get; set;}
-
-        public User User { get; set; }
-
-        public int UserId { get; set; }
     }
 }

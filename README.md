@@ -7,6 +7,8 @@ C#
 Angular
 Bootstrap
 
+##Image Storage
+###Cloudinary Storage 1.5
 
 ## Entity Framework commands
 #### dotnet ef migrations add [name]
