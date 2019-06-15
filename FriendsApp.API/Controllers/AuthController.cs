@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using FriendsApp.API.Data;
 using FriendsApp.API.Dtos;
 using FriendsApp.API.Models;
@@ -18,12 +19,14 @@ namespace FriendsApp.API.Controllers
     {
 
         private readonly IAuthRepository _repo;
+        private readonly IMapper _mapper;
 
         private readonly IConfiguration _config; //Appsetting.json
-        public AuthController(IAuthRepository auth, IConfiguration config)
+        public AuthController(IAuthRepository auth, IConfiguration config, IMapper mapper)
         {
             _repo = auth;
             _config = config;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -82,8 +85,12 @@ namespace FriendsApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            //Save user information (photourl) on local storage
+            var user = _mapper.Map<UserListDTO>(userFromRepo);
+
             return Ok(new {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user
             });
 
             

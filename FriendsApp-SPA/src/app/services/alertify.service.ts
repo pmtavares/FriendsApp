@@ -10,15 +10,16 @@ export class AlertifyService {
 
   constructor() { }
 
-  confirm(message: string, okCallback: ()=>any)
+  confirm(title: string, message: string, okCallback: ()=>any)
   {
-    alertify.confirm(message, function(e){
+    alertify.confirm(title, message, function(e){
       if(e)
       {
         okCallback();
       }
       
-    });
+    },function(){alertify.warning('Delete canceled')}); 
+
   }
 
   success(message: string){

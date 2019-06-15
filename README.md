@@ -13,3 +13,7 @@ Bootstrap
 ## Entity Framework commands
 #### dotnet ef migrations add [name]
 #### dotnet ef database update
+
+
+## Refactoring
+### API side needs to be refactored in order to comply with SRP.

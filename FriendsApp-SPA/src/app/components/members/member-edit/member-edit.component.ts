@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MemberEditComponent implements OnInit {
   user: User;
+  
   @ViewChild('editForm') editForm: NgForm; //To manipulate the form (reset etc)
 
   //Method below is to prevent closing the browser when editing the form
@@ -32,6 +33,7 @@ export class MemberEditComponent implements OnInit {
       console.log(data);
       this.user = data['user'];
     })
+    
   }
 
   updateUser()
@@ -43,6 +45,13 @@ export class MemberEditComponent implements OnInit {
       }, error=>{
         this.alertify.error(error);
       });
+  }
+
+  updateMainPhoto(photoUrl)
+  {
+    this.user.photoUrl = photoUrl;
+    const user = JSON.stringify(this.user);
+    localStorage.setItem('user',user );
   }
 
  

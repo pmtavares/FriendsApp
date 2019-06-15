@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Photo } from 'src/app/_models/Photo';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
@@ -13,6 +13,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
+  @Output() getMemberPhotoChange = new EventEmitter<string>(); //Change the photo in the parent component
   baseUrl = environment.apiUrl;
   currentMain: Photo; //Deal with main current photo. 
 
@@ -72,10 +73,26 @@ export class PhotoEditorComponent implements OnInit {
         this.currentMain = this.photos.filter(p=> p.isMain == true)[0]; //Get the main photo from array        
         this.currentMain.isMain = false;
         photo.isMain = true;
+        this.getMemberPhotoChange.emit(photo.url);
         this.alertify.message("Main photo changed");
       }, error => {
         this.alertify.error(error);
       });
+  }
+
+  deletePhoto(id: number)
+  {
+    var loggedUser = this.authService.decodedToken.nameid
+    
+    this.alertify.confirm("Delete Photo?","Are you sure you want to delete this photo?", ()=>{
+      this.userService.deletePhoto(loggedUser, id)
+      .subscribe(next=>{
+        this.alertify.message("Success deleted");
+        this.photos.splice(this.photos.findIndex(p=> p.id === id),1);
+      }, error=>{
+        this.alertify.error(error);
+      });
+    });
   }
 
 }
