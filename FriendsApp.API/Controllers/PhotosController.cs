@@ -13,6 +13,10 @@ using CloudinaryDotNet.Actions;
 using FriendsApp.API.Models;
 using System.Linq;
 
+/*
+* Refactor this code ***
+ */
+
 namespace FriendsApp.API.Controllers
 {
     [Authorize]
