@@ -68,6 +68,8 @@ namespace FriendsApp.API
                     };
                 });
 
+            services.AddScoped<LogUserActivity>();
+
             //Cloudinary images storage: @pedro
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 

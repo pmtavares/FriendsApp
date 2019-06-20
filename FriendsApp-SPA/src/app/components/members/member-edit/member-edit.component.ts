@@ -30,9 +30,12 @@ export class MemberEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.user = data['user'];
-    })
+      this.user.photoUrl = this.user.photos.filter(p=> p.isMain == true)[0].url;
+      const user = JSON.stringify(this.user);
+      localStorage.setItem('user',user );
+    });
+
     
   }
 

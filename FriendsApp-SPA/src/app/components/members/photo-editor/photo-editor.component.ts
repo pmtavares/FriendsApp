@@ -62,6 +62,17 @@ export class PhotoEditorComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
+        if(photo.isMain){
+          this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id)
+            .subscribe(next=>{
+            this.currentMain = this.photos.filter(p=> p.isMain == true)[0]; //Get the main photo from array        
+            this.currentMain.isMain = false;
+            photo.isMain = true;
+            this.getMemberPhotoChange.emit(photo.url);
+          }, error => {
+            this.alertify.error(error);
+          });
+        }
       }
     }
   }

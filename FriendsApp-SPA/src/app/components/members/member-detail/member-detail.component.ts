@@ -23,6 +23,8 @@ export class MemberDetailComponent implements OnInit {
     //this.loadUser();
     this.route.data.subscribe(data => {
       this.user = data['user']; //Same name as in routing navigator
+      this.user.photoUrl = this.user.photos.filter(p=>p.isMain == true)[0].url;
+      console.log(this.user);
     });
 
     this.configureGallery();

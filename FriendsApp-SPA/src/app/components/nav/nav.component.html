@@ -17,7 +17,7 @@
       <div *ngIf="loggedIn()" class="dropdown" dropdown>
         <ul class="navbar-nav">
             <span >
-              <img src="{{currentUser.photoUrl}}" alt="" class="image-profile">
+              <img src="{{currentUser.photoUrl || './././././assets/user.png'}}" alt="" class="image-profile">
             </span>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light cursor-pointer"  id="navbarDropdown" dropdownToggle>

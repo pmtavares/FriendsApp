@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import {JwtModule} from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -17,6 +17,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { ErrorInterceptorProvider } from './services/error.intercept';
 import { AlertifyService } from './services/alertify.service';
 import { JqueryBootStrapService } from './services/jquerybootstrap.service';
+import {TimeAgoPipe} from 'time-ago-pipe';
+
+
 import { MemberListComponent } from './components/members/member-list/member-list.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
@@ -50,7 +53,8 @@ export function tokenGetter()
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TimeAgoPipe
 
 
   ],
@@ -61,6 +65,7 @@ export function tokenGetter()
     FormsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,

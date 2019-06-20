@@ -28,10 +28,8 @@ export class RegisterValidators{
 
     static passwordsMustMatch(g: AbstractControl) : Promise<ValidationErrors |null>
     {
-
         //return g.get("password").value === g.get("confirmPassword").value ? null : {"mismatch": false};
-        return new Promise((resolve, reject) =>{         
-                
+        return new Promise((resolve, reject) =>{        
             if(g.value)
             {
                 resolve ({'mismatch' : false});
@@ -44,8 +42,7 @@ export class RegisterValidators{
     }
 
     static MatchPassword(control: AbstractControl) {
-        let password = control.get('password').value;
- 
+        let password = control.get('password').value; 
         let confirmPassword = control.get('confirmPassword').value;
  
          if(password != confirmPassword) {
