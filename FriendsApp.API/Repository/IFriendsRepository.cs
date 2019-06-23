@@ -4,6 +4,7 @@
  */
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FriendsApp.API.Helpers;
 using FriendsApp.API.Models;
 
 namespace FriendsApp.API.Repository
@@ -16,7 +17,8 @@ namespace FriendsApp.API.Repository
 
          Task<bool> SaveAll();
 
-         Task<IEnumerable<User>> GetUsers();
+         //Task<IEnumerable<User>> GetUsers();
+         Task<PagedList<User>> GetUsers(UserParams userParams);
 
          Task<User> GetUser(int id);
 

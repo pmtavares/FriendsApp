@@ -11,7 +11,7 @@ using FriendsApp.API.Helpers;
 
 namespace FriendsApp.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
+    [ServiceFilter(typeof(LogUserActivity))] //Make some changes whe the user executes some action
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -26,11 +26,13 @@ namespace FriendsApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams) //Added UserParamsw after pagination implementatio0n
         {
-            var users = await _repo.GetUsers();
+            var users = await _repo.GetUsers(userParams);
 
             var usersToReturn = _mapper.Map<IEnumerable<UserListDTO>>(users);
+            //Add in the response header
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }
