@@ -8,11 +8,11 @@ namespace FriendsApp.API.Helpers
 
         public int TotalItems { get; set; }
 
-        public int ItemPerPage { get; set; }
+        public int ItemsPerPage { get; set; }
         public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
             this.CurrentPage = currentPage;
-            this.ItemPerPage = itemsPerPage;
+            this.ItemsPerPage = itemsPerPage;
             this.TotalItems = totalItems;
             this.TotalPages = totalPages;
         }

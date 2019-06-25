@@ -10,5 +10,9 @@ namespace FriendsApp.API.Helpers
             get { return pageSize;}
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value;}
         }
+
+        //Filters
+        public int UserId {get; set;}
+        public string Gender {get; set;}
     }
 }

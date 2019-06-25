@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule  } from 'ngx-bootstrap';
 import {JwtModule} from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -32,6 +32,7 @@ import { MemberEditComponent } from './components/members/member-edit/member-edi
 import { MemberEditResolver } from './_resolver/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './components/members/photo-editor/photo-editor.component';
+import { MemberListResolver } from './_resolver/member-list.resolver';
 
 
 
@@ -68,6 +69,7 @@ export function tokenGetter()
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    PaginationModule.forRoot(),
     FileUploadModule,
     JwtModule.forRoot({
       config: {
@@ -86,6 +88,7 @@ export function tokenGetter()
     UserService,
     MemberDetailResolver,
     MemberEditResolver,
+    MemberListResolver,
     PreventUnsavedChanges
     
   ],

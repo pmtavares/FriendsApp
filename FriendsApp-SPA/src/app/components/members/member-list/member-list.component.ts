@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/User';
 import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { ActivatedRoute } from '@angular/router';
+import { PaginationResult, Pagination } from 'src/app/_models/Pagination';
+import { PageChangedEvent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-member-list',
@@ -10,23 +13,42 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
+  pagination: Pagination;
 
-  constructor(private userService: UserService, private alertify: AlertifyService) { }
+  constructor(private userService: UserService, private alertify: AlertifyService, 
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.loadUsers();
+    //this.loadUsers();
+    this.loadUsersResolve();
+
+  }
+
+  
+  loadUsersResolve()
+  {
+    this.route.data.subscribe(data=>{
+      this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
+    });
   }
 
   loadUsers()
   {
-    this.userService.getUsers()
-    .subscribe((users: User[])=>{
-      this.users = users;
-      console.log(this.users);
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage)
+    .subscribe((users: PaginationResult<User[]>)=>{
+      this.users = users.result;
+      this.pagination = users.pagination;
     },
     error => {
       this.alertify.error(error);
     });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
+
   }
 
 }
