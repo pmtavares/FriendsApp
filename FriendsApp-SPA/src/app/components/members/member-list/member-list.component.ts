@@ -14,14 +14,32 @@ import { PageChangedEvent } from 'ngx-bootstrap';
 export class MemberListComponent implements OnInit {
   users: User[];
   pagination: Pagination;
+  //Filters
+  user: User = JSON.parse(localStorage.getItem('user'));
+  genderList = [{value: 'male', display:'Males'}, {value: 'female', display: 'Females'}];
+  userParams: any = {};
 
   constructor(private userService: UserService, private alertify: AlertifyService, 
     private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    //this.loadUsers();
+  ngOnInit() {    
     this.loadUsersResolve();
+    this.loadUserParams();
+    this.loadUsers();
+    }
 
+  loadUserParams()
+  {
+    this.userParams.gender = this.user.gender === 'female'?'male':'female';
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
+    this.userParams.orderBy = 'lastActive';
+  }
+
+  resetFilters()
+  {
+    this.loadUserParams();
+    this.loadUsersResolve();
   }
 
   
@@ -33,9 +51,11 @@ export class MemberListComponent implements OnInit {
     });
   }
 
+  
+  //Inactive method
   loadUsers()
   {
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage)
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
     .subscribe((users: PaginationResult<User[]>)=>{
       this.users = users.result;
       this.pagination = users.pagination;
@@ -48,7 +68,6 @@ export class MemberListComponent implements OnInit {
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.loadUsers();
-
   }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +55,38 @@ namespace FriendsApp.API.Repository
          //Method below is to implement pages lists
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users =  _context.Users.Include(u=> u.Photos);
+            var users =  _context.Users.Include(u=> u.Photos)
+                            .OrderByDescending(u=> u.LastActive).AsQueryable();
+
+            //Not show current user in the list
+            users = users.Where(u=> u.Id != userParams.UserId).Where(u=> u.Gender == userParams.Gender);
+
+            //Show the oposite gender
+            //users = users.Where(u=> u.Gender == userParams.Gender);
+
+            //Check Min and Max age
+            if(userParams.MinAge != 18 || userParams.MaxAge != 99)
+            {
+                var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+                var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+                users = users.Where(u=> u.DateOfBirth >= minDob && u.DateOfBirth <=maxDob);
+            }
+
+            //Order by functionality
+            if(!string.IsNullOrEmpty(userParams.OrderBy))
+            {
+                switch(userParams.OrderBy)
+                {
+                    case "createdAt":
+                        users = users.OrderByDescending(u=>u.CreatedAt);
+                        break;
+                    default:
+                        users = users.OrderByDescending(u => u.LastActive);
+                        break;
+                }
+            }
+
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 

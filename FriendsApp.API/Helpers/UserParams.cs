@@ -14,5 +14,12 @@ namespace FriendsApp.API.Helpers
         //Filters
         public int UserId {get; set;}
         public string Gender {get; set;}
+
+        //Order
+        public string OrderBy {get; set;}
+
+        //More Filters
+        public int MinAge{get; set;} = 18;
+        public int MaxAge{get; set;} = 99;
     }
 }
