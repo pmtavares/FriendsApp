@@ -52,7 +52,6 @@ export class MemberListComponent implements OnInit {
   }
 
   
-  //Inactive method
   loadUsers()
   {
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)

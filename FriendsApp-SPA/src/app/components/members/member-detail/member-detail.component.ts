@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/_models/User';
 import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { TabsetComponent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-member-detail',
@@ -11,7 +12,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-
+  @ViewChild('memberMessageTab') memberMessageTab: TabsetComponent; //For clicks on different parts go to messages tabs
   user: User;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -24,7 +25,12 @@ export class MemberDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user']; //Same name as in routing navigator
       this.user.photoUrl = this.user.photos.filter(p=>p.isMain == true)[0].url;
-      console.log(this.user);
+    });
+
+    //Get tab parameter and go to message tab in user detail
+    this.route.queryParams.subscribe(params =>{
+      const selectTab = params['tab'];
+      this.memberMessageTab.tabs[selectTab > 0 ? selectTab: 0].active = true;
     });
 
     this.configureGallery();
@@ -73,6 +79,10 @@ export class MemberDetailComponent implements OnInit {
         this.alertify.error(error);
       });
   } 
+ //Message tab active
+  selectTab(tabId: number) {
+    this.memberMessageTab.tabs[tabId].active = true;
+  }
 
     
 
